@@ -1,5 +1,3 @@
-import os
-
 from celery import shared_task
 
 from api.services.sync.video import VideoSync

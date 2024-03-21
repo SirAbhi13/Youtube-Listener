@@ -76,3 +76,4 @@ nosetests.xml
 setup.cfg
 .pre-commit-config.yaml
 .editorconfig
+celerybeat-schedule

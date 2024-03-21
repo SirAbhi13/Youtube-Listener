@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 
+from celery.schedules import crontab
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -26,6 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-tm4swsg6)crapcxgf-8%1pe*9)62$9nls$7ta2c8gbjuh^qz3l"
+YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -44,6 +46,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "api",
+    "celery",
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
@@ -57,6 +61,17 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "yt_listener.urls"
+
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
+CELERY_BEAT_SCHEDULE = {
+    "fetch_yt": {
+        "task": "api.tasks.fetch_yt",
+        "schedule": crontab(minute="*/1"),
+        "args": (),
+    }
+}
+
 
 TEMPLATES = [
     {
@@ -139,3 +154,33 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "[{asctime} {name}: {levelname}] {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+        "app_console": {
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
+        },
+        "scripts": {
+            "handlers": ["console"],
+            "level": "INFO",
+        },
+    },
+}

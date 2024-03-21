@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class VideoData(models.Model):
+class Video(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     video_id = models.CharField(max_length=50, unique=True)
@@ -16,7 +16,12 @@ class VideoData(models.Model):
             models.Index(fields=["video_id", "-published_at"]),
             models.Index(fields=["channel_id", "-published_at"]),
         ]
-        db_table = "video_data"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["video_id", "channel_id"], name="unique_video"
+            )
+        ]
+        db_table = "video"
 
     def __str__(self):
         return self.title

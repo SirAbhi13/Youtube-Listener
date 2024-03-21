@@ -72,6 +72,10 @@ CELERY_BEAT_SCHEDULE = {
     }
 }
 
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "yt_listener.pagination.CustomPageNumberPagination",
+    "PAGE_SIZE": 10,
+}
 
 TEMPLATES = [
     {

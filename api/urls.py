@@ -1,5 +1,7 @@
 from django.urls import path
 
-from .views import VideoDataView
+from api.views import VideoView
 
-urlpatterns = [path("searchyt/", VideoDataView.as_view(), name="videoData-view")]
+urlpatterns = [
+    path("search/", VideoView.as_view({"get": "list"}), name="videoData-view")
+]

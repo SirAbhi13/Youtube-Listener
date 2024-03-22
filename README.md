@@ -39,13 +39,19 @@ You will need to open three terminals, after that
 
 - Used bulk create when storing data in db of the records of video data. refer `api.services.sync.video.syncRecordsToDB`
 - stores 10,000 entries at once.
-- created indexes using video_id and channel_id
+- created indexes using `video_id` and `channel_id`
+- used unique constraint on the combination of video_id and channel_id fields. This constraint prevents duplicate videos (with the same video_id and channel_id) from being inserted into the database. The name attribute is used to define the name of the constraint in the database.
+
 ## Key Features
 
 ### Pagination
 The list API is fully paginated with a default page size of 10. This prevents fetching all results from the DB at once. Helpful when the list API have to get a lot of rows.
 ### Api with proper filters.
 The `localhost:8000/api/search/` is configured to accept params that can be used to filter the data. Helpful for using in dashboard
+
+### Supports Multiple Youtube API KEYS
+- The yt api keys can be added in .env file, separated by commas, which allows the script to switch to next key when quota of one key is exhausted.
+- The cost of a search list request is 100 units and we have around 10k units for a day.
 
 ## API Spec
 

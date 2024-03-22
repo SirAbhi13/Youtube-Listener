@@ -65,7 +65,7 @@ class VideoSync:
                     logger.error("All API keys exhausted.")
                     return
                 logger.info(
-                    f"Quota exceeded for this key, switching to next key.{self.current_key_index, self.api_keys[self.current_key_index]}"
+                    f"Quota exceeded for this key, switching to next key. Key #{self.current_key_index+1}"
                 )
                 self.syncRecordsFromYT()
         except Exception as e:

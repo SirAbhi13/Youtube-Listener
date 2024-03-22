@@ -44,7 +44,8 @@ You will need to open three terminals, after that
 
 ### Pagination
 The list API is fully paginated with a default page size of 10. This prevents fetching all results from the DB at once. Helpful when the list API have to get a lot of rows.
-
+### Api with proper filters.
+The `localhost:8000/api/search/` is configured to accept params that can be used to filter the data. Helpful for using in dashboard
 
 ## API Spec
 
@@ -68,3 +69,5 @@ The list API is fully paginated with a default page size of 10. This prevents fe
 ### Add task to queue forcefully (POST)
 - endpoint = `localhost:8000/api/trigger-fetch-yt/`
 - simply adds task to celery broker to hit youtube api and fetch data and store it in db.
+```bash
+curl --location --request POST 'localhost:8000/api/trigger-fetch-yt/'```

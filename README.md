@@ -2,6 +2,18 @@
 
 This project is a video synchronization service that fetches the latest videos related to a specified topic from YouTube and stores them in a local database. This README provides an overview of the functionalities and endpoints available in this application.
 
+## Table of Contents
+1. [Local Setup](#local-setup)
+    - [Virtual Environment](#virtual-environment)
+    - [Install Dependencies](#install-dependencies)
+    - [Database Setup](#database-setup)
+2. [Run the Server and Celery Task](#run-the-server-and-celery-task)
+3. [Optimisations Made](#optimisations-made)
+4. [Key Features](#key-features)
+5. [API Spec](#api-spec)
+    - [List Video Data](#list-video-data-get)
+    - [Add Task to Queue Forcefully](#add-task-to-queue-forcefully-post)
+
 ## Local Setup
 
 ### Virtual Environment
@@ -45,7 +57,7 @@ You will need to open three terminals, after that
 ## Key Features
 
 ### Pagination
-The list API is fully paginated with a default page size of 10. This prevents fetching all results from the DB at once. Helpful when the list API have to get a lot of rows.
+The Video Data list API is fully paginated with a default page size of 10. This prevents fetching all results from the DB at once. Helpful when the Video Data list API has to get a lot of rows.
 ### Api with proper filters.
 The `localhost:8000/api/search/` is configured to accept params that can be used to filter the data. Helpful for using in dashboard
 
@@ -64,9 +76,8 @@ The `localhost:8000/api/search/` is configured to accept params that can be used
 
     - channel_id (string) :- returns response containing the details of the videos found using channel_id.
     - channel_title (string) :- returns response containing the details of the videos found using channel_title.
-
-    from_date (epoch format):- takes in a date value and returns videos published after from_date.
-    to_date (epoch format):- takes in a date value adn returns videos published till to_date.
+    - from_date (epoch format):- takes in a date value and returns videos published after from_date.
+    - to_date (epoch format):- takes in a date value adn returns videos published till to_date.
 
     Example of a curl request with few params
     ```bash

@@ -1,10 +1,11 @@
 from django.db.models import Q
-from rest_framework import status, viewsets
+from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from api.models import Video
 from api.serializers import VideoRequestSerializer, VideoSerializer
+from api.tasks import fetch_yt
 
 
 class VideoView(viewsets.ModelViewSet):
@@ -37,3 +38,10 @@ class VideoView(viewsets.ModelViewSet):
             query &= Q(published_at__lte=to_date)
 
         return Video.objects.filter(query)
+
+
+class TriggerFetchYT(APIView):
+
+    def post(self, request, format=None):
+        fetch_yt.delay()
+        return Response({"status": "Task added to queue"})

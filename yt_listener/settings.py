@@ -26,8 +26,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-tm4swsg6)crapcxgf-8%1pe*9)62$9nls$7ta2c8gbjuh^qz3l"
-YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY")
+YOUTUBE_API_KEYS = os.environ.get("YOUTUBE_API_KEYS")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
